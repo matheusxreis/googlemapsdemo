@@ -47,6 +47,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
             isZoomGesturesEnabled = false
+            isScrollGesturesEnabled = false
+            isRotateGesturesEnabled = false
+
         }
     }
 }
