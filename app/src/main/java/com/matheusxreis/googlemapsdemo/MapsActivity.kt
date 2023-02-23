@@ -46,10 +46,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
-            isZoomGesturesEnabled = false
-            isScrollGesturesEnabled = false
-            isRotateGesturesEnabled = false
-
         }
+        mMap.setPadding(0,0,300, 0)
     }
 }
