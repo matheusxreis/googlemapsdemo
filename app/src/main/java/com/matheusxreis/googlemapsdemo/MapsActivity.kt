@@ -2,6 +2,7 @@ package com.matheusxreis.googlemapsdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
 
@@ -77,5 +79,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             isZoomControlsEnabled = true
         }
         mMap.setPadding(0,0,300, 0)
+        setMapStyle(mMap)
+    }
+
+    private fun setMapStyle(googleMap: GoogleMap){
+        try {
+            val success = googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this,
+                    R.raw.map_style
+                )
+            )
+            if(!success){
+                Log.d("Maps", "Failed to load style")
+            }
+        }catch(e:Exception){
+            Log.d("Maps", e.toString())
+        }
     }
 }
