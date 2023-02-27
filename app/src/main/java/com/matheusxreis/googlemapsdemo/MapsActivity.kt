@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
+import kotlinx.coroutines.launch
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -82,6 +84,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         mMap.setPadding(0,0,300, 0)
         setMapStyle(mMap)
+        mMap.setMinZoomPreference(15f)
+        mMap.setMaxZoomPreference(17f)
 
     }
 
