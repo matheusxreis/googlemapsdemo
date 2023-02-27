@@ -10,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
@@ -74,7 +75,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
+       // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
@@ -96,5 +98,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }catch(e:Exception){
             Log.d("Maps", e.toString())
         }
+    }
+
+    private fun setCameraPosition():CameraPosition {
+        val saoPaulo = CameraPosition.Builder()
+            .target(LatLng(-23.618652,-46.6033463))
+            .zoom(17f)
+            .bearing(0f)
+            .tilt(45f)
+            .build()
+        return saoPaulo
     }
 }
