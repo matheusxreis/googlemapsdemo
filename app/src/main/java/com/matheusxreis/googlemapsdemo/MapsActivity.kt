@@ -73,8 +73,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        val saoPaulo = LatLng(-23.618652,-46.6033463)
+        mMap.addMarker(MarkerOptions().position(saoPaulo).title("Marker in SP"))
        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()))
         mMap.uiSettings.apply {
@@ -82,6 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         mMap.setPadding(0,0,300, 0)
         setMapStyle(mMap)
+
     }
 
     private fun setMapStyle(googleMap: GoogleMap){
