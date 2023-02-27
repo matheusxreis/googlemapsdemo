@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -84,8 +85,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         mMap.setPadding(0,0,300, 0)
         setMapStyle(mMap)
-        mMap.setMinZoomPreference(15f)
-        mMap.setMaxZoomPreference(17f)
+
+        lifecycleScope.launch {
+            delay(5000)
+
+            mMap.moveCamera(
+                    CameraUpdateFactory.zoomBy(3f)
+            )
+        }
 
     }
 
