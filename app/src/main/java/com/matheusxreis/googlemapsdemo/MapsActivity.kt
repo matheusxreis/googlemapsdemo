@@ -87,10 +87,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(saoPaulo)
                     .title("Marker in SP")
-                    .icon(
-                        fromVectorToBitmap(R.drawable.ic_bike, R.color.purple_200)
-                    )
-                   // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)) // using pre-defined colors
+                    .flat(true)
+                    // .icon(fromVectorToBitmap(R.drawable.ic_bike, R.color.purple_200)) // using custom marker from vector asset
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)) // using pre-defined colors
                    // .icon(BitmapDescriptorFactory.defaultMarker(168f)) // using custom colors - THIS USE HSL COLORS
 
             )
@@ -103,6 +102,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         lifecycleScope.launch {
             delay(4000)
+            mMap.animateCamera(
+                CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000, null
+            )
+
         }
 
     }
