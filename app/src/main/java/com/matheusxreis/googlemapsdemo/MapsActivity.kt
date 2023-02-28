@@ -78,8 +78,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         val saoPaulo = LatLng(-23.618652,-46.6033463)
         mMap.addMarker(MarkerOptions().position(saoPaulo).title("Marker in SP"))
-       // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
+       // mMap.moveCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
@@ -88,11 +88,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         lifecycleScope.launch {
             delay(5000)
-
-            mMap.moveCamera(
-                    CameraUpdateFactory.zoomBy(3f)
-            )
+            val centroCultural = LatLng(-23.5711135,-46.6423182)
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(centroCultural))
         }
+
 
     }
 
