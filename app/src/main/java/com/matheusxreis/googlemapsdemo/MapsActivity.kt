@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -93,7 +94,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
            // mMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null) // -> animate zoom
            // mMap.animateCamera(CameraUpdateFactory.scrollBy(200f, 0f), 2000, null) // -> animate scroll
 
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000, null) // -> animate camera position, including tilt
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000,
+                object : GoogleMap.CancelableCallback {
+                    override fun onCancel() {
+                        Toast.makeText(this@MapsActivity, "Canceled", Toast.LENGTH_LONG).show()
+                    }
+
+                    override fun onFinish() {
+                        Toast.makeText(this@MapsActivity, "Finished", Toast.LENGTH_LONG).show()
+
+                    }
+
+                }) // -> animate camera position, including tilt
 
         }
 
