@@ -1,25 +1,18 @@
-package com.matheusxreis.googlemapsdemo
+package com.matheusxreis.googlemapsdemo.misc
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.DrawableContainer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.lifecycleScope
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
-import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.matheusxreis.googlemapsdemo.Markers
+import com.matheusxreis.googlemapsdemo.R
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -67,6 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(uberlandia1)
                     .title("Marker in Uberlandia1")
+                    .snippet("This is the first marker")
                     .flat(true)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
 
@@ -76,6 +70,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(uberlandia2)
                     .title("Marker in Uberlandia2")
+                    .snippet("This is the second marker")
                     .flat(true)
                     .zIndex(1f)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
