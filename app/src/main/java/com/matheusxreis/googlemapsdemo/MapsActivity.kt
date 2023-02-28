@@ -28,6 +28,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val cameraAndViewport: CameraAndViewport by lazy {
+        CameraAndViewport()
+    }
+    private val markers: Markers by lazy {
+        Markers()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,40 +53,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.normal_map -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-            }
-            R.id.hybrid_map -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-            }
-            R.id.satellite_map -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-            }
-            R.id.terrain_map -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-            }
-            R.id.none_map -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_NONE
-            }
-        }
+        cameraAndViewport.setMapType(item.itemId, mMap)
         return true
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
         val saoPaulo = LatLng(-23.618652, -46.6033463)
         val spMarker = mMap
             .addMarker(
@@ -88,70 +67,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .position(saoPaulo)
                     .title("Marker in SP")
                     .flat(true)
-                    // .icon(fromVectorToBitmap(R.drawable.ic_bike, R.color.purple_200)) // using custom marker from vector asset
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)) // using pre-defined colors
-                   // .icon(BitmapDescriptorFactory.defaultMarker(168f)) // using custom colors - THIS USE HSL COLORS
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
 
             )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
-
-        setMapStyle(mMap)
-
+        cameraAndViewport.setMapStyle(mMap, this@MapsActivity)
         lifecycleScope.launch {
             delay(4000)
             mMap.animateCamera(
-                CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000, null
+                CameraUpdateFactory.newCameraPosition(cameraAndViewport.cameraPosition), 2000, null
             )
-
-        }
-
-    }
-
-    private fun setMapStyle(googleMap: GoogleMap) {
-        try {
-            val success = googleMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    this,
-                    R.raw.map_style
-                )
-            )
-            if (!success) {
-                Log.d("Maps", "Failed to load style")
-            }
-        } catch (e: Exception) {
-            Log.d("Maps", e.toString())
         }
     }
 
-    private fun setCameraPosition(): CameraPosition {
-        val saoPaulo = CameraPosition.Builder()
-            .target(LatLng(-23.618652, -46.6033463))
-            .zoom(17f)
-            .bearing(0f)
-            .tilt(45f)
-            .build()
-        return saoPaulo
-    }
-
-    private fun fromVectorToBitmap(id: Int, color:Int):BitmapDescriptor{
-        val vectorDrawable = ResourcesCompat.getDrawable(resources, id, null)
-        if(vectorDrawable==null){
-            Log.d("MapsActivity", "Resource not found")
-            return BitmapDescriptorFactory.defaultMarker()
-        }
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        DrawableCompat.setTint(vectorDrawable, color)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
 
 }
