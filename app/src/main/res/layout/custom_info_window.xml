@@ -2,13 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,13 +22,13 @@
         />
     <TextView
         android:id="@+id/titleTv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
         android:maxLines="1"
         android:ellipsize="end"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="6dp"
         android:textColor="@color/black"
@@ -34,10 +36,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"
         />
     <TextView
         android:id="@+id/description"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description..."
         android:lines="3"
@@ -45,11 +48,11 @@
         android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="italic"
-        android:textSize="10sp"
-        android:layout_marginHorizontal="6dp"
-        app:layout_constraintStart_toEndOf="@id/imageView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/titleTv"
         app:layout_constraintTop_toBottomOf="@id/titleTv"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

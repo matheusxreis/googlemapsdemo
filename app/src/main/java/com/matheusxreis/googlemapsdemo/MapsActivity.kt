@@ -13,6 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
 import com.matheusxreis.googlemapsdemo.misc.CameraAndViewport
+import com.matheusxreis.googlemapsdemo.misc.CustomInfoWindowAdapter
 import com.matheusxreis.googlemapsdemo.misc.Markers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -80,6 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
+        mMap.setInfoWindowAdapter(CustomInfoWindowAdapter(this@MapsActivity))
         cameraAndViewport.setMapStyle(mMap, this@MapsActivity)
         lifecycleScope.launch {
             delay(4000)
