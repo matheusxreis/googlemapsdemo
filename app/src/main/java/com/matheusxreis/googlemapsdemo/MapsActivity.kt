@@ -85,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListen
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
-        mMap.setPadding(0,0,300, 0)
+        mMap.setPadding(0,0,0, 0)
         mMap.setOnMarkerDragListener(this)
         setMapStyle(mMap)
 
