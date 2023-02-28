@@ -88,8 +88,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         lifecycleScope.launch {
             delay(5000)
-            val centroCultural = LatLng(-23.5711135,-46.6423182)
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(centroCultural))
+            // first paramater -> x
+            // second parameter -> y
+            // a positiive value moves x to right
+            // a posivite value moves y to down
+            mMap.moveCamera(CameraUpdateFactory.scrollBy(-300f, 100f))
         }
 
 
