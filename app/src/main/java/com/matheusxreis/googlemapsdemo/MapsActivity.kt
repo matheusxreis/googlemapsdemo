@@ -13,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
@@ -92,7 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             // second parameter -> y
             // a positiive value moves x to right
             // a posivite value moves y to down
-            mMap.moveCamera(CameraUpdateFactory.scrollBy(-300f, 100f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(defineBounds(), 0))
         }
 
 
@@ -123,4 +124,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .build()
         return saoPaulo
     }
+
+    private fun defineBounds() = LatLngBounds(
+            LatLng(-23.688309448566308, -46.5733864479026), // Southwest boundary
+            LatLng(-23.051332786377262, -46.3431110800338) // Northeast boundary
+    )
 }
