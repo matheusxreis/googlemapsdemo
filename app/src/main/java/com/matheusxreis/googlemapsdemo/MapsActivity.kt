@@ -1,12 +1,16 @@
 package com.matheusxreis.googlemapsdemo
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.DrawableContainer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.lifecycleScope
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -83,8 +87,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(saoPaulo)
                     .title("Marker in SP")
+                    .icon(
+                        fromVectorToBitmap(R.drawable.ic_bike, R.color.purple_200)
+                    )
                    // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)) // using pre-defined colors
-                    .icon(BitmapDescriptorFactory.defaultMarker(168f)) // using custom colors - THIS USE HSL COLORS
+                   // .icon(BitmapDescriptorFactory.defaultMarker(168f)) // using custom colors - THIS USE HSL COLORS
 
             )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
@@ -126,5 +133,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return saoPaulo
     }
 
+    private fun fromVectorToBitmap(id: Int, color:Int):BitmapDescriptor{
+        val vectorDrawable = ResourcesCompat.getDrawable(resources, id, null)
+        if(vectorDrawable==null){
+            Log.d("MapsActivity", "Resource not found")
+            return BitmapDescriptorFactory.defaultMarker()
+        }
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        DrawableCompat.setTint(vectorDrawable, color)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
 
 }
