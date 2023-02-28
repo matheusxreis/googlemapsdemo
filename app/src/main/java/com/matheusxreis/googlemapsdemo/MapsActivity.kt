@@ -94,6 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             // a positiive value moves x to right
             // a posivite value moves y to down
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(defineBounds(), 0))
+            mMap.setLatLngBoundsForCameraTarget(defineBounds())
         }
 
 
