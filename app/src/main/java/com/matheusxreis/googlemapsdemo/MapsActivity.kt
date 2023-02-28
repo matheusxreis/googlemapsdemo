@@ -88,28 +88,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setPadding(0,0,300, 0)
         setMapStyle(mMap)
 
-        lifecycleScope.launch {
-        delay(5000)
-            // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(defineBounds(), 0), 2000, null) // -> animate new bounds
-           // mMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null) // -> animate zoom
-           // mMap.animateCamera(CameraUpdateFactory.scrollBy(200f, 0f), 2000, null) // -> animate scroll
 
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000,
-                object : GoogleMap.CancelableCallback {
-                    override fun onCancel() {
-                        Toast.makeText(this@MapsActivity, "Canceled", Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onFinish() {
-                        Toast.makeText(this@MapsActivity, "Finished", Toast.LENGTH_LONG).show()
-
-                    }
-
-                }) // -> animate camera position, including tilt
-
-        }
-
-
+        onMapClicked()
+        onMapLongClicked()
     }
 
     private fun setMapStyle(googleMap: GoogleMap){
@@ -142,4 +123,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             LatLng(-23.688309448566308, -46.5733864479026), // Southwest boundary
             LatLng(-23.051332786377262, -46.3431110800338) // Northeast boundary
     )
+
+    private fun onMapClicked(){
+        mMap.setOnMapClickListener {
+            Toast.makeText(this@MapsActivity, "Single Click", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun onMapLongClicked(){
+        mMap.setOnMapLongClickListener {
+            mMap.addMarker(MarkerOptions().position(it).title("New marker"))
+
+            Toast.makeText(this@MapsActivity, "Long Click", Toast.LENGTH_LONG).show()
+        }
+    }
 }
