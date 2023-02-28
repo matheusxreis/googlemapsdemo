@@ -88,13 +88,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setMapStyle(mMap)
 
         lifecycleScope.launch {
-            delay(5000)
-            // first paramater -> x
-            // second parameter -> y
-            // a positiive value moves x to right
-            // a posivite value moves y to down
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(defineBounds(), 0))
-            mMap.setLatLngBoundsForCameraTarget(defineBounds())
+        delay(5000)
+            // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(defineBounds(), 0), 2000, null) // -> animate new bounds
+           // mMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null) // -> animate zoom
+           // mMap.animateCamera(CameraUpdateFactory.scrollBy(200f, 0f), 2000, null) // -> animate scroll
+
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()), 2000, null) // -> animate camera position, including tilt
+
         }
 
 
