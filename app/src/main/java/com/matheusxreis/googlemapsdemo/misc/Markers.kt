@@ -1,4 +1,4 @@
-package com.matheusxreis.googlemapsdemo
+package com.matheusxreis.googlemapsdemo.misc
 
 import android.content.Context
 import android.graphics.Bitmap

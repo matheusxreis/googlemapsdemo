@@ -1,4 +1,4 @@
-package com.matheusxreis.googlemapsdemo.misc
+package com.matheusxreis.googlemapsdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,9 +11,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.matheusxreis.googlemapsdemo.Markers
-import com.matheusxreis.googlemapsdemo.R
 import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
+import com.matheusxreis.googlemapsdemo.misc.CameraAndViewport
+import com.matheusxreis.googlemapsdemo.misc.Markers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
