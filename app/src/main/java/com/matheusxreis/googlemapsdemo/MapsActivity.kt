@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
@@ -18,7 +19,7 @@ import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -76,7 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickListe
 
         // Add a marker in Sydney and move the camera
         val saoPaulo = LatLng(-23.618652,-46.6033463)
-        val spMarker = mMap.addMarker(MarkerOptions().position(saoPaulo).title("Marker in SP"))
+        val spMarker = mMap.addMarker(MarkerOptions().position(saoPaulo).title("Marker in SP").draggable(true))
 
         spMarker!!.tag = "Restaurant"
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
@@ -85,9 +86,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickListe
             isZoomControlsEnabled = true
         }
         mMap.setPadding(0,0,300, 0)
+        mMap.setOnMarkerDragListener(this)
         setMapStyle(mMap)
-
-        mMap.setOnMarkerClickListener(this)
 
         lifecycleScope.launch {
             delay(4000)
@@ -121,29 +121,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickListe
         return saoPaulo
     }
 
-    private fun defineBounds() = LatLngBounds(
-            LatLng(-23.688309448566308, -46.5733864479026), // Southwest boundary
-            LatLng(-23.051332786377262, -46.3431110800338) // Northeast boundary
-    )
-
-    private fun onMapClicked(){
-        mMap.setOnMapClickListener {
-            Toast.makeText(this@MapsActivity, "Single Click", Toast.LENGTH_LONG).show()
-        }
-    }
-    private fun onMapLongClicked(){
-        mMap.setOnMapLongClickListener {
-            mMap.addMarker(MarkerOptions().position(it).title("New marker"))
-
-            Toast.makeText(this@MapsActivity, "Long Click", Toast.LENGTH_LONG).show()
-        }
+    override fun onMarkerDrag(marker: Marker) {
+        Log.d("DRAG", "Drag")
     }
 
-    override fun onMarkerClick(marker: Marker): Boolean {
-        Toast.makeText(this@MapsActivity, marker.tag as String, Toast.LENGTH_LONG).show()
+    override fun onMarkerDragEnd(marker: Marker) {
+        Log.d("DRAG", "End")
 
-        /// return false means that the default behavior will occurs too
-        //  return true means that we override the behavior for completely
-        return true
     }
+
+    override fun onMarkerDragStart(marker: Marker) {
+        Log.d("DRAG", "Start")
+
+    }
+
+
 }
