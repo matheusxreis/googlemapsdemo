@@ -31,6 +31,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     private val uberlandia1 = LatLng(-18.897164548406188, -48.267606783188036)
     private val uberlandia2 = LatLng(-18.897620017795344, -48.26966083225863)
+    private val uberlandia3 = LatLng(-18.901379460069514, -48.26817559496808)
+    private val uberlandia4 = LatLng(-18.898974106408545, -48.2737107886835)
+    private val uberlandia5 = LatLng(-18.892203094084973, -48.26892306777173)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,9 +88,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         mMap.setInfoWindowAdapter(CustomInfoWindowAdapter(this@MapsActivity))
         cameraAndViewport.setMapStyle(mMap, this@MapsActivity)
-        addPolyline()
         lifecycleScope.launch {
-            delay(4000)
+            addPolyline()
+
             // mMap.animateCamera(
             //   CameraUpdateFactory.newCameraPosition(cameraAndViewport.cameraPosition), 2000, null
             //  )
@@ -95,14 +98,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    private fun addPolyline(){
+    private suspend fun addPolyline(){
         val polyline = mMap.addPolyline(
             PolylineOptions().apply {
-                add(uberlandia1, uberlandia2)
+                add(uberlandia1, uberlandia2, uberlandia3, uberlandia4, uberlandia5, uberlandia1)
                 width(5f)
                 color(Color.BLUE)
+                geodesic(true)
             }
         )
+
+        delay(3000)
+        val listPoints = listOf<LatLng>(uberlandia3, uberlandia5, uberlandia2)
+        polyline.points = listPoints
     }
 
 }
