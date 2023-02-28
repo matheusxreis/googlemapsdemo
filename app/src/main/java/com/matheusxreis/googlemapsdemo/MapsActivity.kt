@@ -1,5 +1,6 @@
 package com.matheusxreis.googlemapsdemo
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -28,6 +29,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val markers: Markers by lazy {
         Markers()
     }
+    private val uberlandia1 = LatLng(-18.897164548406188, -48.267606783188036)
+    private val uberlandia2 = LatLng(-18.897620017795344, -48.26966083225863)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +57,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val uberlandia1 = LatLng(-18.897164548406188, -48.267606783188036)
-        val uberlandia2 = LatLng(-18.897620017795344, -48.26966083225863)
+
         val uberlandiaMarker1 = mMap
             .addMarker(
                 MarkerOptions()
@@ -83,6 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         mMap.setInfoWindowAdapter(CustomInfoWindowAdapter(this@MapsActivity))
         cameraAndViewport.setMapStyle(mMap, this@MapsActivity)
+        addPolyline()
         lifecycleScope.launch {
             delay(4000)
             // mMap.animateCamera(
@@ -91,5 +94,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+
+    private fun addPolyline(){
+        val polyline = mMap.addPolyline(
+            PolylineOptions().apply {
+                add(uberlandia1, uberlandia2)
+                width(5f)
+                color(Color.BLUE)
+            }
+        )
+    }
 
 }
