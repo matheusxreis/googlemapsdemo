@@ -1,5 +1,6 @@
 package com.matheusxreis.googlemapsdemo
 
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,7 @@ import com.matheusxreis.googlemapsdemo.databinding.ActivityMapsBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -43,7 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListen
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             R.id.normal_map -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
             }
@@ -76,17 +77,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListen
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val saoPaulo = LatLng(-23.618652,-46.6033463)
-        val spMarker = mMap.addMarker(MarkerOptions().position(saoPaulo).title("Marker in SP").draggable(true))
+        val saoPaulo = LatLng(-23.618652, -46.6033463)
+        val spMarker = mMap
+            .addMarker(
+                MarkerOptions()
+                    .position(saoPaulo)
+                    .title("Marker in SP")
+                   // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)) // using pre-defined colors
+                    .icon(BitmapDescriptorFactory.defaultMarker(168f)) // using custom colors - THIS USE HSL COLORS
 
-        spMarker!!.tag = "Restaurant"
+            )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
-       // mMap.moveCamera(CameraUpdateFactory.newCameraPosition(setCameraPosition()))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
-        mMap.setPadding(0,0,0, 0)
-        mMap.setOnMarkerDragListener(this)
+
         setMapStyle(mMap)
 
         lifecycleScope.launch {
@@ -95,7 +100,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListen
 
     }
 
-    private fun setMapStyle(googleMap: GoogleMap){
+    private fun setMapStyle(googleMap: GoogleMap) {
         try {
             val success = googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
@@ -103,36 +108,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMarkerDragListen
                     R.raw.map_style
                 )
             )
-            if(!success){
+            if (!success) {
                 Log.d("Maps", "Failed to load style")
             }
-        }catch(e:Exception){
+        } catch (e: Exception) {
             Log.d("Maps", e.toString())
         }
     }
 
-    private fun setCameraPosition():CameraPosition {
+    private fun setCameraPosition(): CameraPosition {
         val saoPaulo = CameraPosition.Builder()
-            .target(LatLng(-23.618652,-46.6033463))
+            .target(LatLng(-23.618652, -46.6033463))
             .zoom(17f)
             .bearing(0f)
             .tilt(45f)
             .build()
         return saoPaulo
-    }
-
-    override fun onMarkerDrag(marker: Marker) {
-        Log.d("DRAG", "Drag")
-    }
-
-    override fun onMarkerDragEnd(marker: Marker) {
-        Log.d("DRAG", "End")
-
-    }
-
-    override fun onMarkerDragStart(marker: Marker) {
-        Log.d("DRAG", "Start")
-
     }
 
 
