@@ -60,26 +60,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val saoPaulo = LatLng(-23.618652, -46.6033463)
-        val spMarker = mMap
+        val uberlandia1 = LatLng(-18.897164548406188, -48.267606783188036)
+        val uberlandia2 = LatLng(-18.897620017795344, -48.26966083225863)
+        val uberlandiaMarker1 = mMap
             .addMarker(
                 MarkerOptions()
-                    .position(saoPaulo)
-                    .title("Marker in SP")
+                    .position(uberlandia1)
+                    .title("Marker in Uberlandia1")
                     .flat(true)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
 
             )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
+        val uberlandiaMarker2 = mMap
+            .addMarker(
+                MarkerOptions()
+                    .position(uberlandia2)
+                    .title("Marker in Uberlandia2")
+                    .flat(true)
+                    .zIndex(1f)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+
+            )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uberlandia1, 15f))
         mMap.uiSettings.apply {
             isZoomControlsEnabled = true
         }
         cameraAndViewport.setMapStyle(mMap, this@MapsActivity)
         lifecycleScope.launch {
             delay(4000)
-            mMap.animateCamera(
-                CameraUpdateFactory.newCameraPosition(cameraAndViewport.cameraPosition), 2000, null
-            )
+            // mMap.animateCamera(
+            //   CameraUpdateFactory.newCameraPosition(cameraAndViewport.cameraPosition), 2000, null
+            //  )
         }
     }
 
